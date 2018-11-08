@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "387189360619",
+    "firebase_url": "https://lepma-7baf7.firebaseio.com",
+    "project_id": "lepma-7baf7",
+    "storage_bucket": "lepma-7baf7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387189360619:android:70d462915ec4866e",
+        "android_client_info": {
+          "package_name": "com.example.dewansh.lepma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387189360619-psisbi04cp0fheuh3aoska1af91gge7c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dewansh.lepma",
+            "certificate_hash": "2f34a613df6e8aab09b79710b5b837ed0f2f8d4d"
+          }
+        },
+        {
+          "client_id": "387189360619-923spisfgnt0a8jk1a3vt1sd94c5di6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuv3pJAm7QOe1rprTHn4mvIvRORLGRSGI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387189360619-923spisfgnt0a8jk1a3vt1sd94c5di6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

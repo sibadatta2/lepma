@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile"
+    android:orientation="vertical">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:clickable="true"
+            android:onClick="changePictureClicked"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_launcher_background"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/uniqueId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="unique ID" />
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ms_arrowColor="#0000FF"
+            app:ms_arrowSize="16dp"
+            app:ms_floatingLabelColor="#00FF00"
+            app:ms_floatingLabelText="floating label"
+            app:ms_hint="ROLE"
+            app:ms_multiline="true" />
+
+            <EditText
+                android:id="@+id/Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/Age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Age"
+                android:inputType="number" />
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ms_arrowColor="#0000FF"
+            app:ms_arrowSize="16dp"
+            app:ms_floatingLabelColor="#00FF00"
+            app:ms_floatingLabelText="floating label"
+            app:ms_hint="Sex"
+            app:ms_multiline="true" />
+
+            <EditText
+                android:id="@+id/Address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:hint="Address" />
+
+            <EditText
+                android:id="@+id/Contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="contact"
+                android:inputType="phone" />
+
+
+            <EditText
+                android:id="@+id/AADHHAR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="aadhar Number"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/SubCenter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="subcenter"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/PHC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PHC"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/BlockPHC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="blockPHC"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/district"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="district"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/State"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="state"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/CompleteReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
