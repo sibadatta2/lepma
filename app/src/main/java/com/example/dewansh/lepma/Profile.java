@@ -1,6 +1,7 @@
 package com.example.dewansh.lepma;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,8 +33,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
@@ -62,14 +66,17 @@ ImageView profileiamge;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     EditText type,name,age,sex,address,contactno,aadhar,subcenter,PHC,blockPHC,district,state;
     TextView UID;
-    ASHAObject ashaObject;
+    static ASHAObject ashaObject;
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         profileiamge = findViewById(R.id.profile_image);
-        Glide.with(this).load(user.getPhotoUrl()).into(profileiamge);
 
+        UID=findViewById(R.id.uniqueId);
         name=findViewById(R.id.Name);
         age=findViewById(R.id.Age);
         address=findViewById(R.id.Address);
@@ -81,11 +88,15 @@ ImageView profileiamge;
         district=findViewById(R.id.district);
         state=findViewById(R.id.State);
         ashaObject=new ASHAObject();
-        db.collection("PROFILES").document(user.getUid()).set(ashaObject)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("PROFILES").document(user.getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(Profile.this, "profile saved"+ashaObject.toString(), Toast.LENGTH_SHORT).show();
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        ashaObject=documentSnapshot.toObject(ASHAObject.class);
+                        Log.d("asd",ashaObject.toString());
+                        name.setText(ashaObject.getName());
+                        UID.setText("Unique ID: "+ashaObject.getUID());
+                        Glide.with(Profile.this).load(user.getPhotoUrl()).into(profileiamge);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -97,12 +108,9 @@ ImageView profileiamge;
                 });
         if (user != null) {
             // Name, email address, and profile photo Url
-            String uid = user.getUid();
-            ashaObject.setUID(uid);
             String email = user.getEmail();
             ashaObject.setEmail(email);
             Uri photoUrl = user.getPhotoUrl();
-
             ashaObject.setPhoto(photoUrl.toString());
         }
         String[] ITEMS = {"ASHA","ANM","MPW","OTHER"};
@@ -227,47 +235,32 @@ ImageView profileiamge;
                                 Log.d(TAG, e.toString());
                             }
                         });
-                /*try{
-                    imageBytes= UploadImageService.getImageByteArray(bitmap, ext);
-                    UploadImageService uploadImageService = new UploadImageService();
-                    uploadImageService.uploadImage(imageBytes)
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    ashaObject.setPhoto(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
-                                    FirebaseFirestore.getInstance()
-                                            .collection("PROFILES")
-                                            .document(user.getUid().toString())
-                                            .set(user, SetOptions.merge())
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                *//*updateUserObject();
-                                                Intent searchIntent = new Intent(FillDetailsActivity.this, MainActivity.class);
-                                                Toasty.success(getApplicationContext(), "Registration Complete.", Toast.LENGTH_LONG, true).show();
-                                                startActivity(searchIntent);
-                                                finish();*//*
-                                                    Toasty.error(getApplicationContext(), "imageupload complete. " , Toast.LENGTH_LONG, true).show();
 
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toasty.error(getApplicationContext(), "Registration Failed. " + e.getLocalizedMessage(), Toast.LENGTH_LONG, true).show();
+            }
+        });
+    }
+    void upload(Uri uri){
+        StorageReference riversRef = storageRef.child(user.getUid()+"/"+"profile");
+        final ProgressDialog progressDialog = new ProgressDialog(Profile.this);
+        progressDialog.setMessage("uploading image");
+        progressDialog.show();
+        UploadTask uploadTask = riversRef.putFile(uri);
 
-                                                }
-                                            });
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toasty.error(getApplicationContext(), "Registration Failed. " + e.getLocalizedMessage(), Toast.LENGTH_LONG, true).show();
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+               progressDialog.dismiss();
+                Toast.makeText(Profile.this,"unable to upload to server",Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                }
-                            });
-                }catch(Exception e){}*/
+
+                ashaObject.setPhoto(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                progressDialog.dismiss();
             }
         });
     }
@@ -280,18 +273,10 @@ ImageView profileiamge;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 profileiamge.setImageBitmap(bitmap);
+                upload(selectedImage);
 
-                if(selectedImage != null) {
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    if (cursor != null && cursor.moveToFirst()) {
-                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                        String filePath = cursor.getString(columnIndex);
-                        ext = filePath.substring(filePath.lastIndexOf(".") + 1);
-                        ext = ext.toUpperCase();
-                        cursor.close();
-                    }
-                }
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -304,139 +289,6 @@ ImageView profileiamge;
 
     }
 
-   /* @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        try {
-            if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-                Uri selectedImage = data.getData();
-                try {
-                    final Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-
-                    if (selectedImage != null) {
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-
-                        for(int i = 0; i < filePathColumn.length; ++i)
-                            Log.d("DEBUG ", filePathColumn[i]);
-
-                        // Get image extension
-                        String ext = "JPG";
-
-                        try {
-                            if (cursor != null && cursor.moveToFirst()) {
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String filePath = cursor.getString(columnIndex);
-                                ext = filePath.substring(filePath.lastIndexOf(".") + 1);
-                                ext = ext.toUpperCase();
-                                cursor.close();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        if(!isNetworkAvailable())
-                            networkNotAvailable("Profile Picture Updation Failed.");
-                        else {
-                            *//*final KProgressHUD HUD = getKProgressHUD("Please Wait...");
-                            HUD.show();*//*
-
-
-                            final UploadImageService uploadImageService = new UploadImageService();
-                            final String finalExt = ext;
-
-                            // Delete old image and upload new image
-                            uploadImageService.deleteImage()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            uploadImageService.uploadImage(bitmap, finalExt)
-                                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                                        @Override
-                                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                            FirestoreService.changeField("imageUrl", taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
-                                                            FirestoreService firestoreService = FirestoreService.getInstance();
-
-                                                            FirebaseFirestore.getInstance()
-                                                                    .collection("users")
-                                                                    .document(FirestoreService.getUser().get("documentID").toString())
-                                                                    .set(new ASHAObject(FirestoreService.getUser()), SetOptions.merge())
-                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                        @Override
-                                                                        public void onSuccess(Void aVoid) {
-                                                                            profileiamge.setImageBitmap(bitmap);
-                                                                            Toasty.success(Profile.this, "Profile Picture Successfully Updated.", Toast.LENGTH_LONG, true).show();
-                                                                        }
-                                                                    })
-                                                                    .addOnFailureListener(new OnFailureListener() {
-                                                                        @Override
-                                                                        public void onFailure(@NonNull Exception e) {
-                                                                            Toasty.error(Profile.this, e.getMessage(), Toast.LENGTH_LONG, true).show();
-                                                                        }
-                                                                    });
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Toasty.error(Profile.this, e.getMessage() + e.getLocalizedMessage().toString(), Toast.LENGTH_LONG, true).show();
-                                                        }
-                                                    });
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toasty.error(Profile.this, e.getMessage(), Toast.LENGTH_LONG, true).show();
-
-                                        }
-                                    });
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-    public void networkNotAvailable(final String Message) {
-       *//* final KProgressHUD HUD = getKProgressHUD("Please Wait...");
-        HUD.show();
-*//*
-        final SweetAlertDialog pDialog = new SweetAlertDialog(Profile.this, SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Please Wait....");
-        pDialog.setCancelable(false);
-        pDialog.show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Toasty.error(getActivity(), Message + " Check Your Internet Connection.", Toast.LENGTH_LONG, true).show();
-                pDialog.dismiss();
-                new SweetAlertDialog(Profile.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Connectivity Issue!")
-                        .setContentText(Message)
-                        .setConfirmText("Ok")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                sDialog.dismissWithAnimation();
-                            }
-                        }).show();
-            }
-        }, 2000);
-
-    }*/
-   private byte[] imageBytes;
 
 
 }

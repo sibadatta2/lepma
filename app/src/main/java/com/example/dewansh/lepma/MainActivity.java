@@ -20,10 +20,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Admin extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = "MainActivity";
 
     private RecyclerView recyclerView;
@@ -31,17 +33,18 @@ public class Admin extends AppCompatActivity {
 
     private FirebaseFirestore firestoreDB;
     private ListenerRegistration firestoreListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.rvNoteList);
+    /*    recyclerView = findViewById(R.id.rvNoteList);
         firestoreDB = FirebaseFirestore.getInstance();
 
         loadNotesList();
 
-        firestoreListener = firestoreDB.collection("PROFILES")
+        firestoreListener = firestoreDB.collection("notes")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -50,17 +53,15 @@ public class Admin extends AppCompatActivity {
                             return;
                         }
 
-                        List<ASHAObject> ashaObjectList = new ArrayList<>();
+                        List<Note> notesList = new ArrayList<>();
 
                         for (DocumentSnapshot doc : documentSnapshots) {
-                            ASHAObject ashaObject = doc.toObject(ASHAObject.class);
-                            ashaObject.setId(doc.getId());
-                            //if(!(ashaObject.getType().equals("admin")) && ashaObject.getType().equals("unapproved")) {
-                                ashaObjectList.add(ashaObject);
-                           // }
+                            Note note = doc.toObject(Note.class);
+                            note.setId(doc.getId());
+                            notesList.add(note);
                         }
 
-                        mAdapter = new NoteRecyclerViewAdapter(ashaObjectList, getApplicationContext(), firestoreDB);
+                        mAdapter = new NoteRecyclerViewAdapter(notesList, getApplicationContext(), firestoreDB);
                         recyclerView.setAdapter(mAdapter);
                     }
                 });
@@ -74,23 +75,21 @@ public class Admin extends AppCompatActivity {
     }
 
     private void loadNotesList() {
-        firestoreDB.collection("PROFILES")
+        firestoreDB.collection("notes")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<ASHAObject> ashaObjectList = new ArrayList<>();
+                            List<Note> notesList = new ArrayList<>();
 
                             for (DocumentSnapshot doc : task.getResult()) {
-                                ASHAObject ashaObject = doc.toObject(ASHAObject.class);
-                                ashaObject.setId(doc.getId());
-                                //if(!(ashaObject.getType().equals("admin")) && ashaObject.getType().equals("unapproved")){
-                                    ashaObjectList.add(ashaObject);
-                                //}
+                                Note note = doc.toObject(Note.class);
+                                note.setId(doc.getId());
+                                notesList.add(note);
                             }
 
-                            mAdapter = new NoteRecyclerViewAdapter(ashaObjectList, getApplicationContext(), firestoreDB);
+                            mAdapter = new NoteRecyclerViewAdapter(notesList, getApplicationContext(), firestoreDB);
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                             recyclerView.setLayoutManager(mLayoutManager);
                             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -119,5 +118,5 @@ public class Admin extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-}
+    }*/
+}}

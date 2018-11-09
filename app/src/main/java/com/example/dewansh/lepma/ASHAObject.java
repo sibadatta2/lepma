@@ -5,12 +5,28 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Map;
 
 public class ASHAObject {
-    private String UID,type,name,age,sex,address,contactno,aadhar,subcenter,PHC,blockPHC,district,state,photo,email;
+    private String id,UID,type,name,age,sex,address,contactno,aadhar,subcenter,PHC,blockPHC,district,state,photo,email,approval;
 
     public ASHAObject() {
     }
 
-    public ASHAObject(String UID, String type, String name, String age, String sex, String address, String contactno, String aadhar, String subcenter, String PHC, String blockPHC, String district, String state, String photo, String email) {
+    public String getApproval() {
+        return approval;
+    }
+
+    public void setApproval(String approval) {
+        this.approval = approval;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public ASHAObject(String UID, String type, String name, String age, String sex, String address, String contactno, String aadhar, String subcenter, String PHC, String blockPHC, String district, String state, String photo, String email, String approval) {
         this.UID = UID;
         this.type = type;
         this.name = name;
@@ -26,6 +42,27 @@ public class ASHAObject {
         this.state = state;
         this.photo = photo;
         this.email = email;
+        this.approval = approval;
+    }
+
+    public ASHAObject(String id, String UID, String type, String name, String age, String sex, String address, String contactno, String aadhar, String subcenter, String PHC, String blockPHC, String district, String state, String photo, String email, String approval) {
+        this.id = id;
+        this.UID = UID;
+        this.type = type;
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.address = address;
+        this.contactno = contactno;
+        this.aadhar = aadhar;
+        this.subcenter = subcenter;
+        this.PHC = PHC;
+        this.blockPHC = blockPHC;
+        this.district = district;
+        this.state = state;
+        this.photo = photo;
+        this.email = email;
+        this.approval = approval;
     }
 
     public ASHAObject(Map<String,Object> user) {
@@ -50,7 +87,8 @@ public class ASHAObject {
     @Override
     public String toString() {
         return "ASHAObject{" +
-                "UID='" + UID + '\'' +
+                "id='" + id + '\'' +
+                ", UID='" + UID + '\'' +
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", age='" + age + '\'' +
@@ -65,6 +103,7 @@ public class ASHAObject {
                 ", state='" + state + '\'' +
                 ", photo='" + photo + '\'' +
                 ", email='" + email + '\'' +
+                ", approval='" + approval + '\'' +
                 '}';
     }
 
