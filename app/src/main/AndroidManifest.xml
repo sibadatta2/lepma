@@ -14,20 +14,20 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity android:name=".Profile" />
-        <activity android:name=".Login">
+        <activity android:name=".Login" />
+        <activity android:name=".DetermineRole" />
+        <activity android:name=".Asha" />
+        <activity android:name=".Admin" />
+        <activity android:name=".Main3Activity">
+
+        </activity>
+        <activity android:name=".Main4Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetermineRole" />
-        <activity android:name=".Asha" />
-        <activity android:name=".Admin" />
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

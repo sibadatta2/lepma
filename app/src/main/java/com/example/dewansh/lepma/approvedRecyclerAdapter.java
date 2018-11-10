@@ -1,0 +1,97 @@
+package com.example.dewansh.lepma;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
+
+public class approvedRecyclerAdapter extends RecyclerView.Adapter<approvedRecyclerAdapter.ViewHolder>{
+    private List<ASHAObject> ashaObjectList;
+
+    private Context context;
+    private FirebaseFirestore firestoreDB;
+
+    public approvedRecyclerAdapter(List<ASHAObject> notesList, Context context, FirebaseFirestore firestoreDB) {
+        this.ashaObjectList = notesList;
+        this.context = context;
+        this.firestoreDB = firestoreDB;
+        Toast.makeText(context,ashaObjectList.toString(),Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public approvedRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
+
+        return new approvedRecyclerAdapter.ViewHolder(view);
+    }
+
+
+    @Override
+    public void onBindViewHolder(approvedRecyclerAdapter.ViewHolder holder, int position) {
+        final int itemPosition = position;
+        final ASHAObject note = ashaObjectList.get(itemPosition);
+
+        holder.title.setText(note.getName());
+        holder.content.setText(note.getContactno());
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                approveAsha(note);
+            }
+        });
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteNote(note);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return ashaObjectList.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView title, content;
+        ImageView edit;
+        ImageView delete;
+
+        ViewHolder(View view) {
+            super(view);
+            title = view.findViewById(R.id.tvTitle);
+            content = view.findViewById(R.id.tvContent);
+
+            edit = view.findViewById(R.id.ivEdit);
+            edit.setVisibility(View.GONE);
+            delete = view.findViewById(R.id.ivDelete);
+        }
+    }
+
+
+    void approveAsha(ASHAObject ashaObject){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference noteRef = db.document("PROFILES/"+ashaObject.getUID());
+        noteRef.update("approval","approved");
+
+    }
+    private void deleteNote(ASHAObject ashaObject) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference noteRef = db.document("PROFILES/"+ashaObject.getUID());
+        noteRef.update("approval","unapproved");
+    }
+}

@@ -97,7 +97,7 @@ public class DetermineRole extends AppCompatActivity {
                                     dialog.dismiss();
                                 }
                                 Toast.makeText(DetermineRole.this, "Welcome admin",Toast.LENGTH_LONG).show();
-                                Intent admin = new Intent(DetermineRole.this,Admin.class);
+                                Intent admin = new Intent(DetermineRole.this,Main3Activity.class);
                                 startActivity(admin);
                                 finish();
                             }
