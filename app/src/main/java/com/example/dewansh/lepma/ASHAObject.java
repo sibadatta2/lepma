@@ -2,9 +2,10 @@ package com.example.dewansh.lepma;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class ASHAObject {
+public class ASHAObject implements Serializable {
     private String id,UID,type,name,age,sex,address,contactno,aadhar,subcenter,PHC,blockPHC,district,state,photo,email,approval;
 
     public ASHAObject() {

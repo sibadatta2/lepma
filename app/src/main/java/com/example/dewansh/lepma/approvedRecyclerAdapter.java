@@ -1,6 +1,7 @@
 package com.example.dewansh.lepma;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,7 +46,12 @@ public class approvedRecyclerAdapter extends RecyclerView.Adapter<approvedRecycl
 
         holder.title.setText(note.getName());
         holder.content.setText(note.getContactno());
-
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendToProfile(note);
+            }
+        });
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +88,11 @@ public class approvedRecyclerAdapter extends RecyclerView.Adapter<approvedRecycl
         }
     }
 
-
+    void sendToProfile( ASHAObject note){
+        Intent i = new Intent(context,Profile.class);
+        i.putExtra("ASHAObject",note);
+        context.startActivity(i);
+    }
     void approveAsha(ASHAObject ashaObject){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference noteRef = db.document("PROFILES/"+ashaObject.getUID());
