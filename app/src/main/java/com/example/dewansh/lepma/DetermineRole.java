@@ -105,12 +105,12 @@ public class DetermineRole extends AppCompatActivity {
                                 Toast.makeText(DetermineRole.this, "asha",Toast.LENGTH_LONG).show();
                                 if(approval.equals("approved")){
                                     Toast.makeText(DetermineRole.this, "Welcome asha",Toast.LENGTH_LONG).show();
-                                    Intent asha = new Intent(DetermineRole.this,Asha.class);
+                                   // Intent asha = new Intent(DetermineRole.this,Asha.class);
                                     if (dialog.isShowing()) {
                                         dialog.dismiss();
                                     }
                                     dirty= true;
-                                    startActivity(asha);
+                                    //startActivity(asha);
                                     finish();
                                 }else if(approval.equals("unapproved")) {
                                     Toast.makeText(DetermineRole.this, "Your request is still pending",Toast.LENGTH_LONG).show();

@@ -1,12 +1,12 @@
 package com.example.dewansh.lepma;
 
 public class SuspectObject {
-    String UID,modeDetect,contactRoot,name,age,sex,dob,address,gps,relative,aadhar;
+    String UID,modeDetect,contactRoot,name,age,sex,dob,address,gps,relative,aadhar,regDate,nextAppointment;
 
     public SuspectObject() {
     }
 
-    public SuspectObject(String UID, String modeDetect, String contactRoot, String name, String age, String sex, String dob, String address, String gps, String relative, String aadhar) {
+    public SuspectObject(String UID, String modeDetect, String contactRoot, String name, String age, String sex, String dob, String address, String gps, String relative, String aadhar, String regDate, String nextAppointment) {
         this.UID = UID;
         this.modeDetect = modeDetect;
         this.contactRoot = contactRoot;
@@ -18,6 +18,8 @@ public class SuspectObject {
         this.gps = gps;
         this.relative = relative;
         this.aadhar = aadhar;
+        this.regDate = regDate;
+        this.nextAppointment = nextAppointment;
     }
 
     public String getUID() {
@@ -106,5 +108,21 @@ public class SuspectObject {
 
     public void setAadhar(String aadhar) {
         this.aadhar = aadhar;
+    }
+
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    public String getNextAppointment() {
+        return nextAppointment;
+    }
+
+    public void setNextAppointment(String nextAppointment) {
+        this.nextAppointment = nextAppointment;
     }
 }
