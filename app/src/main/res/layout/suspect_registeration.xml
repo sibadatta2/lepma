@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image_suspect"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:clickable="true"
+                android:onClick="changePictureClicked"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_launcher_background"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/unique_id_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <EditText
+                android:id="@+id/mode_detection_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="detected by"/>
+
+            <TextView
+                android:id="@+id/contact_tracing_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="tracing contact"/>
+
+            <EditText
+                android:id="@+id/name_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="name"/>
+
+            <EditText
+                android:id="@+id/age_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="age"/>
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sex_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ms_arrowColor="#0000FF"
+                app:ms_arrowSize="16dp"
+                app:ms_floatingLabelColor="#00FF00"
+                app:ms_floatingLabelText="floating label"
+                app:ms_hint="sex"
+                app:ms_multiline="true" />
+
+            <EditText
+                android:id="@+id/dob_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="date of birth"/>
+
+            <EditText
+                android:id="@+id/adderss_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="address"/>
+
+            <EditText
+                android:id="@+id/relative_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="relative name"/>
+
+            <EditText
+                android:id="@+id/aadhar_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="aadhar"/>
+
+            <Button
+                android:id="@+id/registe_suspect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

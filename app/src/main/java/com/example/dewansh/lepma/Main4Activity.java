@@ -25,15 +25,15 @@ public class Main4Activity extends AppCompatActivity {
 
         toolbar.setTitle("Pending");
 
-       // Fragment fragment;
-       // fragment = new PendingRequest();
-        //loadFragment(fragment);
+        Fragment fragment;
+        fragment = new AshaFragmentSuspectRegisteration();
+        loadFragment(fragment);
 
     }
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
+        transaction.replace(R.id.frame_container_asha, fragment);
         transaction.disallowAddToBackStack();
         transaction.commit();
     }
@@ -47,13 +47,13 @@ public class Main4Activity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.registeration:
-                    toolbar.setTitle("Pending");
-                    fragment = new PendingRequest();
+                    toolbar.setTitle("Registeration");
+                    fragment = new AshaFragmentSuspectRegisteration();
                     loadFragment(fragment);
                     return true;
                 case R.id.dosage:
                     toolbar.setTitle("Approved");
-                    fragment = new ApprovedRequests();
+                    fragment = new AshaFragmentSuspectRegisteration();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_profile:
