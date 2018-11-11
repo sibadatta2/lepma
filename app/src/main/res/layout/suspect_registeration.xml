@@ -16,7 +16,7 @@
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:clickable="true"
-                android:onClick="changePictureClicked"
+
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/ic_launcher_background"
                 app:civ_border_color="#FF000000"

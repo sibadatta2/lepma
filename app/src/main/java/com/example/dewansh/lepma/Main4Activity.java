@@ -2,6 +2,7 @@ package com.example.dewansh.lepma;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -22,11 +23,12 @@ public class Main4Activity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_asha);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());
         toolbar.setTitle("Pending");
 
         Fragment fragment;
-        fragment = new AshaFragmentSuspectRegisteration();
+        fragment = new ashaOptions();
         loadFragment(fragment);
 
     }
@@ -48,7 +50,7 @@ public class Main4Activity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.registeration:
                     toolbar.setTitle("Registeration");
-                    fragment = new AshaFragmentSuspectRegisteration();
+                    fragment = new ashaOptions();
                     loadFragment(fragment);
                     return true;
                 case R.id.dosage:

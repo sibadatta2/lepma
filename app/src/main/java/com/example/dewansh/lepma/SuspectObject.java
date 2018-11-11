@@ -1,12 +1,9 @@
 package com.example.dewansh.lepma;
 
 public class SuspectObject {
-    String UID,modeDetect,contactRoot,name,age,sex,dob,address,gps,relative,aadhar,regDate,nextAppointment;
+    private String UID,modeDetect,contactRoot,name,age,sex,dob,address,gps,relative,aadhar,regDate,nextAppointment,photo;
 
-    public SuspectObject() {
-    }
-
-    public SuspectObject(String UID, String modeDetect, String contactRoot, String name, String age, String sex, String dob, String address, String gps, String relative, String aadhar, String regDate, String nextAppointment) {
+    public SuspectObject(String UID, String modeDetect, String contactRoot, String name, String age, String sex, String dob, String address, String gps, String relative, String aadhar, String regDate, String nextAppointment, String photo) {
         this.UID = UID;
         this.modeDetect = modeDetect;
         this.contactRoot = contactRoot;
@@ -20,6 +17,37 @@ public class SuspectObject {
         this.aadhar = aadhar;
         this.regDate = regDate;
         this.nextAppointment = nextAppointment;
+        this.photo = photo;
+    }
+
+    public SuspectObject() {
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    @Override
+    public String toString() {
+        return "SuspectObject{" +
+                "UID='" + UID + '\'' +
+                ", modeDetect='" + modeDetect + '\'' +
+                ", contactRoot='" + contactRoot + '\'' +
+                ", name='" + name + '\'' +
+                ", age='" + age + '\'' +
+                ", sex='" + sex + '\'' +
+                ", dob='" + dob + '\'' +
+                ", address='" + address + '\'' +
+                ", gps='" + gps + '\'' +
+                ", relative='" + relative + '\'' +
+                ", aadhar='" + aadhar + '\'' +
+                ", regDate='" + regDate + '\'' +
+                ", nextAppointment='" + nextAppointment + '\'' +
+                '}';
     }
 
     public String getUID() {
